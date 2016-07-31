@@ -202,8 +202,9 @@ while step < opt.steps do
                     test_instance.reward = test_reward
                     table.insert(best_history, test_instance)
                 end
-                torch.save(string.format('save/%s_%03d.params.t7', opt.save_name, epoch), 
-                    agent.w:clone():float())
+                local filename = string.format('save/%s_%03d.params.t7', opt.save_name, epoch)
+                torch.save(filename, agent.w:clone():float())
+                print('Parameter saved to:', filename)
             end
             collectgarbage()
         end
@@ -243,7 +244,7 @@ while step < opt.steps do
                                 step=step})
         agent.w, agent.dw, agent.g, agent.g2, agent.deltas, agent.tmp, agent.target_w = 
                 w, dw, g, g2, deltas, tmp, target_w
-        print('Saved:', filename .. '.t7')
+        print('Saved:', filename)
         io.flush()
         collectgarbage()
     end
