@@ -1,7 +1,3 @@
-if not dqn then
-    require "util.initenv"
-end
-
 local Net = torch.class('Net')
 function Net:__init(args)
     self.args = args
@@ -18,7 +14,7 @@ function Net:__init(args)
     -- IMPORTANT! do weight sharing after model is in cuda
     for k, v in pairs(self.share_list) do
         local m1 = v[1].data.module
-        if #v > 2 and g_opts.verbose > 3 then
+        if #v > 2 then
             print(string.format("[%s] %d modules are shared", k, #v))
         end
         for j = 2,#v do

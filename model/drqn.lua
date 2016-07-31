@@ -2,8 +2,10 @@ require 'model.net'
 
 local DRQN, parent = torch.class('DRQN', 'Net')
 function DRQN:build_init_states(args)
-    self.c0 = torch.Tensor(1, args.lstm_dim)
-    self.h0 = torch.Tensor(1, args.lstm_dim)
+    local state = {}
+    table.insert(state, torch.Tensor(1, args.lstm_dim)) -- c
+    table.insert(state, torch.Tensor(1, args.lstm_dim)) -- h
+    return state
 end
 
 function DRQN:build_model(args)
@@ -20,7 +22,7 @@ end
 function DRQN:build_lstm(args, input, c0, h0)
     local T = args.hist_len
     local lstm_dim = args.lstm_dim
-    local cnn_feature = build_cnn_with_gate(args, input, T)
+    local cnn_feature = self:build_cnn_with_gate(args, input, T)
     local x_gates = {}
     x_gates = {nn.SplitTable(1, 2)(cnn_feature):split(T)}
 

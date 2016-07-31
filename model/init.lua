@@ -1,7 +1,6 @@
-if not dqn then
-    require 'util.initenv'
-end
-
+require 'nn'
+require 'nngraph'
+require 'util.LinearNB'
 require 'model.dqn'
 require 'model.drqn'
 --require 'model.mqn'
@@ -14,7 +13,7 @@ function g_create_network(args)
     args.filter_stride      = args.filter_stride or {2, 2}
     args.pad                = args.pad or {1, 1}
     args.n_hid_enc          = args.edim or 256
-    args.memsize            = args.memsize or args.hist_len - 1
+    args.memsize            = args.memsize or (args.hist_len - 1)
     args.lindim             = args.lindim or args.n_hid_enc / 2
     args.lstm               = args.lstm or false
     args.lstm_dim           = args.edim or 256
