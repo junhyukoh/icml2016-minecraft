@@ -15,7 +15,7 @@ cmd:text('Train Agent in Environment:')
 cmd:text()
 cmd:text('Options:')
 
-cmd:option('-framework', 'env.mcwrap', 'name of training framework')
+cmd:option('-framework', 'environment.mcwrap', 'name of training framework')
 cmd:option('-env', '', 'name of environment to use')
 cmd:option('-test_env', '', 'name of test environment to use')
 cmd:option('-test_hist_len', 30, 'history length for testing')
@@ -100,8 +100,6 @@ if #test_env > 0 then
 end
 
 local learn_start = agent.learn_start
-local start_time = sys.clock()
-local reward_counts = {}
 local episode_counts = {}
 local v_history = {}
 local qmax_history = {}
@@ -114,7 +112,7 @@ for i=1,#test_env do
     test_reward_history[i] = {}
 end
 
-local total_reward, nrewards, nepisodes
+local total_reward, nepisodes
 local screen, reward, terminal = game_env:getState()
 local epoch_time = sys.clock()
 
@@ -148,7 +146,7 @@ while step < opt.steps do
             print("Evalutating the agent on the training environment: " 
                     .. color.green(train_env))
             ev_flag = false
-            nepisodes, nrewards, total_reward = eval_agent(game_env, agent, opt.eval_steps)
+            nepisodes, total_reward = eval_agent(game_env, agent, opt.eval_steps)
             local ind = #reward_history+1
             total_reward = total_reward/math.max(1, nepisodes)
             if agent.v_avg then
@@ -158,7 +156,6 @@ while step < opt.steps do
             end
             print("Epoch:", epoch, "Reward:", total_reward, "num. ep.:", nepisodes)
             reward_history[ind] = total_reward
-            reward_counts[ind] = nrewards
             episode_counts[ind] = nepisodes
             screen, reward, terminal = game_env:newGame()
         end
@@ -217,7 +214,7 @@ while step < opt.steps do
         epoch_time = sys.clock() - epoch_time
         assert(step==agent.numSteps, 'trainer step: ' .. step ..
                 ' & agent.numSteps: ' .. agent.numSteps)
-        print("Steps:", step, "Step/Sec:",  math.floor(opt.prog_freq / epoch_time))
+        print("Steps:", step, "Steps/Sec:",  math.floor(opt.prog_freq / epoch_time))
         if opt.verbose > 2 then
             agent:report()
         end
@@ -231,14 +228,12 @@ while step < opt.steps do
         agent.w, agent.dw, agent.g, agent.g2, agent.deltas, agent.tmp, agent.target_w = 
             nil, nil, nil, nil, nil, nil, nil
 
-        local filename = opt.save_name
-        filename = filename
-        torch.save('save/' .. filename .. ".t7", {agent = agent,
+        local filename = 'save/' .. opt.save_name .. ".t7"
+        torch.save(filename, {agent = agent,
                                 model = agent.network,
                                 best_model = agent.best_test_network,
                                 test_reward_history = test_reward_history,
                                 reward_history = reward_history,
-                                reward_counts = reward_counts,
                                 episode_counts = episode_counts,
                                 v_history = v_history,
                                 td_history = td_history,

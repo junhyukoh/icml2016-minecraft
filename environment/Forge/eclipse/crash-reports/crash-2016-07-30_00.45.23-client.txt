@@ -1,0 +1,81 @@
+---- Minecraft Crash Report ----
+
+WARNING: coremods are present:
+  MinecraftLoadingPlugin (UpdateDisplayCoreMod.jar)
+Contact their authors BEFORE contacting forge
+
+// But it works on my machine.
+
+Time: 7/30/16 12:45 AM
+Description: Initializing game
+
+java.lang.ExceptionInInitializerError
+	at net.minecraft.client.Minecraft.setWindowIcon(Minecraft.java:611)
+	at net.minecraft.client.Minecraft.startGame(Minecraft.java:401)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:325)
+	at net.minecraft.client.main.Main.main(SourceFile:120)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(Unknown Source)
+	at GradleStart.main(Unknown Source)
+Caused by: java.lang.RuntimeException: org.lwjgl.LWJGLException: Could not open X display connection
+	at org.lwjgl.opengl.Display.<clinit>(Display.java:141)
+	... 12 more
+Caused by: org.lwjgl.LWJGLException: Could not open X display connection
+	at org.lwjgl.opengl.LinuxDisplay.openDisplay(Native Method)
+	at org.lwjgl.opengl.LinuxDisplay.incDisplay(LinuxDisplay.java:306)
+	at org.lwjgl.opengl.LinuxDisplay.internAtom(LinuxDisplay.java:616)
+	at org.lwjgl.opengl.LinuxDisplay.init(LinuxDisplay.java:721)
+	at org.lwjgl.opengl.Display.<clinit>(Display.java:138)
+	... 12 more
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.client.Minecraft.setWindowIcon(Minecraft.java:611)
+	at net.minecraft.client.Minecraft.startGame(Minecraft.java:401)
+
+-- Initialization --
+Details:
+Stacktrace:
+	at net.minecraft.client.Minecraft.run(Minecraft.java:325)
+	at net.minecraft.client.main.Main.main(SourceFile:120)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135)
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28)
+	at net.minecraftforge.gradle.GradleStartCommon.launch(Unknown Source)
+	at GradleStart.main(Unknown Source)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8
+	Operating System: Linux (amd64) version 3.10.0-229.20.1.el7.x86_64
+	Java Version: 1.8.0_60, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 1223997232 bytes (1167 MB) / 1441792000 bytes (1375 MB) up to 28631367680 bytes (27305 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: 
+	Loaded coremods (and transformers): 
+MinecraftLoadingPlugin (UpdateDisplayCoreMod.jar)
+  umich.ML.mcwrap.coremod.MinecraftTransformer
+	Launched Version: 1.8
+	LWJGL: 2.9.1
+	OpenGL: ~~ERROR~~ RuntimeException: No OpenGL context found in the current thread.
+	GL Caps: 
+	Using VBOs: Yes
+	Is Modded: Definitely; Client brand changed to 'fml,forge'
+	Type: Client (map_client.txt)
+	Resource Packs: []
+	Current Language: ~~ERROR~~ NullPointerException: null
+	Profiler Position: N/A (disabled)

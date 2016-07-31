@@ -16,7 +16,7 @@ eps_end=0.1
 eps_endt=$replay_memory
 state_dim=3072
 batch_size=32
-save_name=${network}_$1
+save_name=$1_$network
 agent_params="lr=$lr,ep=1,ep_end=$eps_end,ep_endt=$eps_endt,hist_len=$hist_len,replay_memory=$replay_memory,network="\"$network\"",state_dim=$state_dim,minibatch_size=$batch_size"
 steps=25000000
 

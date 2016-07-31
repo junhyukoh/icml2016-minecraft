@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd env/Forge
+cd environment/Forge
 # rm -rf .gradle/2.0/taskArtifacts/*
 source gradlew runClient --project-cache-dir ~/cache

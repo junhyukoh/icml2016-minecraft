@@ -22,9 +22,6 @@ function torchSetup(_opt)
 
     -- preprocess options:
     --- convert options strings to tables
-    if opt.pool_frms then
-        opt.pool_frms = str_to_table(opt.pool_frms)
-    end
     if opt.env_params then
         opt.env_params = str_to_table(opt.env_params)
     end
@@ -100,7 +97,6 @@ function setup(_opt)
 
     --preprocess options:
     --- convert options strings to tables
-    _opt.pool_frms = str_to_table(_opt.pool_frms)
     _opt.env_params = str_to_table(_opt.env_params)
     _opt.agent_params = str_to_table(_opt.agent_params)
     if _opt.agent_params.transition_params then
