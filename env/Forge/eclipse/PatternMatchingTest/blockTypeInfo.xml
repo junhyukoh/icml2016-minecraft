@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<blocks>
+   <block id="0" type="stone" default = "true" brightness="1.0" />
+   <block id="1" goalID="1 4" type="wool" color="RED" brightness="1.0" />
+   <block id="2" goalID="2 5" type="wool" color="CYAN" brightness="1.0" />
+   <block id="3" goalID="3"   type="wool" color="YELLOW" brightness="1.0" />
+   <block id="4" goalID="6"   type="wool" color="LIME" brightness="1.0" />
+   <block id="5" goalID="7"   type="wool" color="BLUE" brightness="1.0" />
+</blocks>

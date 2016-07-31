@@ -1,0 +1,16 @@
+[
+{
+  "modid": "DQN",
+  "name": "Minecraft DQN",
+  "description": "A Deep Q-Learning Newtork Interface for Minecraft",
+  "version": "1.0",
+  "mcversion": "1.8",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Valliappa Chockalingam"],
+  "credits": "Junhyuk Oh, Professor Rick Lewis, Professor Satinder Baveja, Professor Honglak Lee",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

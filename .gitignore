@@ -1,0 +1,17 @@
+env/Forge/.gradle/
+env/Forge/eclipse/options.txt
+env/Forge/eclipse/usernamecache.json
+env/Forge/eclipse/saves/*
+env/Forge/eclipse/logs/*
+env/Forge/eclipse/crash-reports/*
+*.cfg
+*.properties
+*.swp
+*.log.gz
+*.log
+*.bin
+*.pyc
+*.png
+*.t7
+*.mp4
+save

@@ -1,0 +1,9 @@
+<goals>
+  <goal reward="-0.02" terminate="0" 		 />
+  <goal reward="1"    terminate="1" objectID="1" />
+  <goal reward="-1"   terminate="1" objectID="2" />
+  <goal reward="-0.02" terminate="0" objectID="3" />
+  <goal reward="-1"   terminate="1" objectID="4" />
+  <goal reward="1"    terminate="1" objectID="5" />
+  <goal reward="-0.02" terminate="0" objectID="6" />
+</goals>
