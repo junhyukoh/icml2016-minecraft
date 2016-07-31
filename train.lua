@@ -138,10 +138,8 @@ while step < opt.steps do
         if ev_flag then
             epoch = epoch + 1
             epoch_time = sys.clock() - epoch_time
-            print("Steps:", step, "Steps/Sec:",  math.floor(opt.eval_freq / epoch_time))
-            if opt.verbose > 2 then
-                agent:report()
-            end
+            print("Epoch:", epoch, "V:", "Steps/Sec:",  math.floor(opt.eval_freq / epoch_time))
+            agent:report()
             epoch_time = sys.clock()
             print("Evaluating the agent on the training environment: " 
                     .. color.green(train_env))
@@ -170,7 +168,7 @@ while step < opt.steps do
                     total_reward = total_reward/math.max(1, nepisodes)
                     if #test_reward_history[test_id] == 0 or 
                             total_reward > torch.Tensor(test_reward_history[test_id]):max() then
-                        agent.best_test_network[test_id] = test_agent.network:clone()
+                        agent.best_test_network[test_id] = test_agent.network:clone():float()
                     end
                     test_reward_history[test_id][ind] = total_reward
                     print("Epoch:", epoch, "Reward:", total_reward, "num. ep.:", nepisodes)
