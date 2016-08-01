@@ -1,8 +1,0 @@
-<actions>
-   <action id="0" desc="LL" act="yaw" diff="-90" />
-   <action id="1" desc="LR" act="yaw" diff="90" />
-   <action id="2" desc="LU" act="pitch" diff="-45" lim="0" />
-   <action id="3" desc="LD" act="pitch" diff="45" lim="45" />
-   <action id="4" desc="FD" act="forward" />
-   <action id="5" desc="BD" act="backward" />
-</actions>

@@ -92,6 +92,7 @@ public class MCWrap {
             System.out.print("[[ MCWrap (( Forge Mod Loader Initializer )) ]] : Parsed Task string: " + taskStr + "\n");
         }
 
+        taskStr = "tasks/" + taskStr;
         System.out.print("[[ MCWrap (( Forge Mod Loader Initializer )) ]] : Initializing Task.\n");
         Task.init(taskStr);
         System.out.print("[[ MCWrap (( Forge Mod Loader Initializer )) ]] : Finished Initializing Task.\n");

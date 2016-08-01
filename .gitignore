@@ -1,9 +1,12 @@
 environment/Forge/.gradle
 environment/Forge/eclipse/options.txt
 environment/Forge/eclipse/usernamecache.json
+environment/Forge/eclipse/config/splash.properties
 environment/Forge/eclipse/saves/*
 environment/Forge/eclipse/logs/*
 environment/Forge/eclipse/crash-reports/*
+environment/Forge/eclipse/maps
+environment/Forge/eclipse/tasks
 *.cfg
 *.swp
 *.log.gz
