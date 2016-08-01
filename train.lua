@@ -94,7 +94,7 @@ if #test_env > 0 then
     agent_param.target_q = nil
     agent_param.replay_memory = 10000
     test_agent = create_agent(opt, agent_param)
-    test_agent.network.net:share(agent.network.net, 'weight', 'bias')
+    share_weights(agent.network.net, test_agent.network.net)
 end
 
 local learn_start = agent.learn_start

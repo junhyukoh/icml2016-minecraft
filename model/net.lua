@@ -13,9 +13,11 @@ function Net:__init(args)
     -- IMPORTANT! do weight sharing after model is in cuda
     for k, v in pairs(self.share_list) do
         local m1 = v[1].data.module
+        --[[
         if #v > 2 then
             print(string.format("[%s] %d modules are shared", k, #v))
         end
+        --]]
         for j = 2,#v do
             local m2 = v[j].data.module
             m2:share(m1,'weight','bias','gradWeight','gradBias')
@@ -104,39 +106,5 @@ function Net:share_module(name, node)
         self.share_list[name] = {node}
     else
         table.insert(self.share_list[name], node)
-    end
-end
-
-function Net:share_weight_from(m)
-    for name, node in pairs(m) do
-        if self.m[name] then
-            local dst_module = self.m[name].data.module
-            local src_module = node.data.module
-            dst_module:share(src_module, 'weight','bias','gradWeight','gradBias')
-        end
-    end
-end
-
-function Net:copy_weight_from(m, log)
-    for name, node in pairs(m) do
-        if self.m[name] then
-            local src_module = node.data.module
-            local dst_module = self.m[name].data.module
-            if src_module.weight then
-                assert(dst_module.weight, name)
-                assert(src_module.weight:nElement() == dst_module.weight:nElement(), 
-                    name .. "source: " .. src_module.weight:nElement() ..
-                    "dest: " .. dst_module.weight:nElement())
-                dst_module.weight:copy(src_module.weight)
-                if log then
-                    print(name, "copied")
-                end
-            end
-            if src_module.bias then
-                assert(dst_module.bias)
-                assert(src_module.bias:nElement() == dst_module.bias:nElement())
-                dst_module.bias:copy(src_module.bias)
-            end
-        end
     end
 end
