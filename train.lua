@@ -92,7 +92,7 @@ if #test_env > 0 then
     agent_param.hist_len = opt.test_hist_len
     agent_param.minibatch_size = 1 
     agent_param.target_q = nil
-    agent_param.replay_memory = 50000
+    agent_param.replay_memory = 10000
     test_agent = create_agent(opt, agent_param)
     test_agent.network.net:share(agent.network.net, 'weight', 'bias')
 end
@@ -176,27 +176,6 @@ while step < opt.steps do
 
                 -- Maintain and save only top K best models
                 if opt.saveNetworkParams then
-                    local test_reward = test_reward_history[1][#test_reward_history[1]]
-                    local min_key = -1
-                    local min_instance = nil
-                    for k, v in pairs(best_history) do
-                        if min_instance == nil or min_instance.reward > v.reward then
-                            min_key = k
-                            min_instance = v
-                        end
-                    end
-                    if #best_history < opt.num_save or min_instance.reward < test_reward then
-                        if min_instance and #best_history >= opt.num_save then
-                            os.execute("rm " .. string.format("save/%s_%03d.params.t7", 
-                                opt.save_name, min_instance.epoch))
-                            table.remove(best_history, min_key)
-                        end
-
-                        local test_instance = {}
-                        test_instance.epoch = epoch
-                        test_instance.reward = test_reward
-                        table.insert(best_history, test_instance)
-                    end
                     local filename = string.format('save/%s_%03d.params.t7', opt.save_name, epoch)
                     torch.save(filename, agent.w:clone():float())
                     print('Parameter saved to:', filename)
