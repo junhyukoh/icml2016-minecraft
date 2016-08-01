@@ -19,7 +19,7 @@ function nql:__init(args)
     --- epsilon annealing
     self.ep_start   = args.ep or 1
     self.ep         = self.ep_start -- Exploration probability.
-    self.ep_end     = args.ep_end or self.ep
+    self.ep_end     = args.ep_end or 0.1
     self.ep_endt    = args.ep_endt or 1000000
 
     ---- learning rate annealing
@@ -52,7 +52,6 @@ function nql:__init(args)
     self.bufferSize       = args.bufferSize or 512
     self.smooth_target_q  = args.smooth_target_q or true
     self.target_q_eps     = args.target_q_eps or 1e-3
-    self.edim             = args.edim or 512 
     self.memsize          = args.memsize or args.hist_len - 1
     self.clip_grad        = args.clip_grad or 20
     self.transition_params = args.transition_params or {}
