@@ -3,9 +3,9 @@ require 'nngraph'
 require 'util.LinearNB'
 require 'model.dqn'
 require 'model.drqn'
---require 'model.mqn'
---require 'model.rmqn'
---require 'model.frmqn'
+require 'model.mqn'
+require 'model.rmqn'
+require 'model.frmqn'
 
 function g_create_network(args)
     local new_args = {}
@@ -23,11 +23,10 @@ function g_create_network(args)
     new_args.edim               = args.edim or 256
     new_args.memsize            = args.memsize or (new_args.hist_len - 1)
     new_args.lindim             = args.lindim or new_args.edim / 2
-    new_args.lstm               = args.lstm or false
     new_args.lstm_dim           = args.edim or 256
     new_args.gpu                = args.gpu or -1
     new_args.Linear             = nn.LinearNB
-    if args.gpu > 0 then
+    if args.gpu and args.gpu > 0 then
         new_args.softmax        = cudnn.SoftMax
         new_args.nl             = cudnn.ReLU
         new_args.convLayer      = cudnn.SpatialConvolution
@@ -41,5 +40,13 @@ function g_create_network(args)
         return DQN.new(new_args)
     elseif args.name == "drqn" then
         return DRQN.new(new_args)
+    elseif args.name == "mqn" then
+        return MQN.new(new_args)
+    elseif args.name == "rmqn" then
+        return RMQN.new(new_args)
+    elseif args.name == "frmqn" then
+        return FRMQN.new(new_args)
+    else
+        error("Invalid model name:" .. args.name)
     end
 end

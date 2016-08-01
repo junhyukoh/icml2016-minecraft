@@ -1,12 +1,11 @@
 local Net = torch.class('Net')
 function Net:__init(args)
     self.args = args
-    self.modules = {}
     self.share_list = {}
-    self.net = self:build_model(args) 
     self.init_states = self:build_init_states(args)
     self:reset_init_states()
     self.recurrent = #self.init_states > 0
+    self.net = self:build_model(args) 
 
     if args.gpu > 0 then
         self:cuda()
@@ -39,12 +38,12 @@ end
 
 function Net:forward(x)
     if self.recurrent then
+        table.insert(input, x)
         self:reset_init_states(x:size(1))
         local input = {}
         for i = 1, #self.init_states do
             table.insert(input, self.init_states[i])
         end
-        table.insert(input, x)
         return self.net:forward(input)
     else
         return self.net:forward(x)

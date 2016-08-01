@@ -14,9 +14,7 @@ function DRQN:build_model(args)
     local input = nn.Identity()()
     local h, c = self:build_lstm(args, input, c0, h0, testing)
     local q = nn.Linear(args.lstm_dim, args.n_actions)(h)
-    local output = {q}
-    local model = nn.gModule({c0, h0, input}, output)
-    return model
+    return nn.gModule({input, c0, h0}, {q})
 end
 
 function DRQN:build_lstm(args, input, c0, h0)
