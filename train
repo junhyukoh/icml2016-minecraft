@@ -12,15 +12,12 @@ hist_len=10
 test_hist_len=10
 network="$name"
 seed=1
+steps=25000000
 replay_memory=1000000
-eps_end=0.1
-eps_endt=$replay_memory
 state_dim=3072
 batch_size=32
-save_name=$env_$name
-agent_params="lr=$lr,ep=1,ep_end=$eps_end,ep_endt=$eps_endt,hist_len=$hist_len,replay_memory=$replay_memory,network="\"$network\"",state_dim=$state_dim,minibatch_size=$batch_size"
-steps=25000000
-
+save_name=${env}_${name}
+agent_params="lr=$lr,hist_len=$hist_len,replay_memory=$replay_memory,network="\"$network\"",state_dim=$state_dim,minibatch_size=$batch_size"
 args="-save_name $save_name -env $env -agent_params $agent_params -steps $steps -gpu $gpu -seed $seed -test_env $test_env -test_hist_len $test_hist_len"
 echo $args
 
