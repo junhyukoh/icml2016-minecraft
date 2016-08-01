@@ -38,9 +38,9 @@ end
 
 function Net:forward(x)
     if self.recurrent then
+        local input = {}
         table.insert(input, x)
         self:reset_init_states(x:size(1))
-        local input = {}
         for i = 1, #self.init_states do
             table.insert(input, self.init_states[i])
         end
