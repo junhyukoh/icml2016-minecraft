@@ -387,7 +387,7 @@ function nql:greedy(state)
 end
 
 function nql:report()
-    print(get_weight_norms(self.network.dqn or self.network))
-    print(get_grad_norms(self.network.dqn or self.network))
+    print(get_weight_norms(self.network.net))
+    print(get_grad_norms(self.network.net))
     print("Grad Norm: " .. tostring(self.dw:norm()))
 end

@@ -138,8 +138,10 @@ while step < opt.steps do
         if ev_flag then
             epoch = epoch + 1
             epoch_time = sys.clock() - epoch_time
-            print("Epoch:", epoch, "V:", "Steps/Sec:",  math.floor(opt.eval_freq / epoch_time))
-            agent:report()
+            print("Epoch:", epoch, "V:", agent.v_avg, "Steps/Sec:",  math.floor(opt.eval_freq / epoch_time))
+            if opt.verbose > 2 then
+                agent:report()
+            end
             epoch_time = sys.clock()
             print("Evaluating the agent on the training environment: " 
                     .. color.green(train_env))
