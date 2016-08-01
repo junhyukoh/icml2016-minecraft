@@ -19,6 +19,8 @@ function MQN:build_model(args)
     local history_flat = nn.View(-1):setNumInputDims(1)(history)
     local key_blocks = nn.Linear(conv_dim, edim)(history_flat)
     local val_blocks = nn.Linear(conv_dim, edim)(history_flat)
+    key_blocks = nn.View(-1, T-1, edim):setNumInputDims(2)(key_blocks)
+    val_blocks = nn.View(-1, T-1, edim):setNumInputDims(2)(val_blocks)
     local hid, o = self:build_retrieval(args, key_blocks, val_blocks, 
                 cnn_features, conv_dim, unpack(init_states)) 
     local hid2dim = nn.View(-1):setNumInputDims(1)(hid)
@@ -45,8 +47,6 @@ function MQN:build_retrieval(args, key_blocks, val_blocks, cnn_features, conv_di
     local edim = args.edim
     local memsize = math.min(T-1, args.memsize)
     local context = self:build_context(args, cnn_features, conv_dim, edim, c0, h0)
-    local key_blocks = nn.View(-1, T-1, edim):setNumInputDims(2)(key_blocks)
-    local val_blocks = nn.View(-1, T-1, edim):setNumInputDims(2)(val_blocks)
     local hid = nn.View(1, -1):setNumInputDims(1)(context)
     local key_blocks_t = nn.Narrow(2, T - memsize, memsize)(key_blocks)
     local val_blocks_t = nn.Narrow(2, T - memsize, memsize)(val_blocks)
