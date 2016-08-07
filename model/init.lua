@@ -26,16 +26,7 @@ function g_create_network(args)
     new_args.lstm_dim           = args.edim or 256
     new_args.gpu                = args.gpu or -1
     new_args.Linear             = nn.LinearNB
-    if args.gpu and args.gpu > 0 then
-        new_args.softmax        = cudnn.SoftMax
-        new_args.nl             = cudnn.ReLU
-        new_args.convLayer      = cudnn.SpatialConvolution
-    else
-        new_args.softmax        = nn.SoftMax
-        new_args.nl             = nn.ReLU
-        new_args.convLayer      = nn.SpatialConvolution
-    end
-
+    
     if args.name == "dqn" then
         return DQN.new(new_args)
     elseif args.name == "drqn" then

@@ -52,7 +52,6 @@ function nql:__init(args)
     self.bufferSize       = args.bufferSize or 512
     self.smooth_target_q  = args.smooth_target_q or true
     self.target_q_eps     = args.target_q_eps or 1e-3
-    self.memsize          = args.memsize or args.hist_len - 1
     self.clip_grad        = args.clip_grad or 20
     self.transition_params = args.transition_params or {}
     self.network          = args.network or self:createNetwork()
@@ -71,16 +70,15 @@ function nql:__init(args)
             error("Could not find network file " .. self.network)
         end
         if self.best == 1 and exp.best_model then
-            if exp.best_model[1] then
-                self.network = exp.best_model[1]
-            else
-                self.network = exp.best_model
-            end
-            print("Load the best model")
+            self.network = exp.best_model[1]
         elseif exp.model then
-            print("Load the latest model")
             self.network = exp.model
+        else
+            self.network = exp
         end
+        self.hist_len = self.network.args.hist_len
+        self.input_dims = self.network.args.input_dims
+        print("Load Network from " .. args.network)
     else
         print('Creating Agent Network from ' .. self.network)
         self.name = self.network
@@ -122,7 +120,6 @@ function nql:__init(args)
 
     self.w, self.dw = self.network:getParameters()
     self.dw:zero()
-    print("Num of Parameters", self.w:nElement())
 
     self.deltas = self.dw:clone():fill(0)
     self.tmp= self.dw:clone():fill(0)

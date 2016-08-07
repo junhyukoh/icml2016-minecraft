@@ -58,11 +58,11 @@ function DRQN:build_cnn_with_gate(args, input, T)
     local prev_dim = args.ncols
     local prev_input = reshape_input
     for i=1,#args.n_units do
-        conv[i] = args.convLayer(prev_dim, args.n_units[i],
+        conv[i] = nn.SpatialConvolution(prev_dim, args.n_units[i],
                             args.filter_size[i], args.filter_size[i],
                             args.filter_stride[i], args.filter_stride[i],
                             args.pad[i], args.pad[i])(prev_input)
-        conv_nl[i] = args.nl()(conv[i])
+        conv_nl[i] = nn.ReLU()(conv[i])
         prev_dim = args.n_units[i]
         prev_input = conv_nl[i]
     end
@@ -70,7 +70,7 @@ function DRQN:build_cnn_with_gate(args, input, T)
     local nel = 4096
     local conv_flat = nn.View(-1):setNumInputDims(3)(conv_nl[#args.n_units])
     local fc = nn.Linear(nel, args.n_hid_enc)(conv_flat)
-    local fc_nl = args.nl()(fc)
+    local fc_nl = nn.ReLU()(fc)
     local lstm_input = nn.Linear(args.n_hid_enc, 4*args.lstm_dim)(fc_nl)
     return nn.View(-1, T, 4*args.lstm_dim):setNumInputDims(2)(lstm_input)
 end

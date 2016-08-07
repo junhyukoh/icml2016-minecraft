@@ -30,11 +30,11 @@ function MQN:build_model(args)
     if args.lindim == args.edim then
         hid_out = D
     elseif args.lindim == 0 then
-        hid_out = args.nl()(D)
+        hid_out = nn.ReLU()(D)
     else
         local F = nn.Narrow(2,1,args.lindim)(D)
         local G = nn.Narrow(2,1+args.lindim,edim-args.lindim)(D)
-        local K = args.nl()(G)
+        local K = nn.ReLU()(G)
         hid_out = nn.JoinTable(2)({F,K})
     end
     local out = nn.View(-1):setNumInputDims(1)(hid_out)
@@ -53,7 +53,7 @@ function MQN:build_retrieval(args, key_blocks, val_blocks, cnn_features, conv_di
     local MM_key = nn.MM(false, true) 
     local key_out = MM_key({hid, key_blocks_t})
     local key_out2dim = nn.View(-1):setNumInputDims(2)(key_out)
-    local P = args.softmax()(key_out2dim)
+    local P = nn.SoftMax()(key_out2dim)
     local probs3dim = nn.View(1, -1):setNumInputDims(1)(P)
     local MM_val = nn.MM(false, false)
     local o = MM_val({probs3dim, val_blocks_t})
@@ -76,11 +76,11 @@ function MQN:build_cnn(args, input)
     local prev_dim = args.ncols
     local prev_input = reshape_input
     for i=1,#args.n_units do
-        conv[i] = args.convLayer(prev_dim, args.n_units[i],
+        conv[i] = nn.SpatialConvolution(prev_dim, args.n_units[i],
                             args.filter_size[i], args.filter_size[i],
                             args.filter_stride[i], args.filter_stride[i],
                             args.pad[i], args.pad[i])(prev_input)
-        conv_nl[i] = args.nl()(conv[i])
+        conv_nl[i] = nn.ReLU()(conv[i])
         prev_dim = args.n_units[i]
         prev_input = conv_nl[i]
     end

@@ -57,7 +57,7 @@ function FRMQN:build_retrieval(args, key_blocks, val_blocks, cnn_features, conv_
             local MM_key = nn.MM(false, true)
             local key_out = MM_key({hid, key_blocks_t})
             local key_out2dim = nn.View(-1):setNumInputDims(2)(key_out)
-            local P = args.softmax()(key_out2dim)
+            local P = nn.SoftMax()(key_out2dim)
             local probs3dim = nn.View(1, -1):setNumInputDims(1)(P)
             local MM_val = nn.MM(false, false)
             local val_out = MM_val({probs3dim, val_blocks_t})

@@ -9,6 +9,7 @@ function Net:__init(args)
 
     if args.gpu > 0 then
         self:cuda()
+        cudnn.convert(self.net, cudnn)
     end
     -- IMPORTANT! do weight sharing after model is in cuda
     for k, v in pairs(self.share_list) do
@@ -63,7 +64,7 @@ function Net:getParameters()
 end
 
 function Net:clone()
-    local clone = self.new(self.args)
+    local clone = g_create_network(self.args)
     clone.net = self.net:clone()
     return clone
 end
