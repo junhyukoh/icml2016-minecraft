@@ -21,8 +21,7 @@ function DRQN:build_lstm(args, input, c0, h0)
     local T = args.hist_len
     local lstm_dim = args.lstm_dim
     local cnn_feature = self:build_cnn_with_gate(args, input, T)
-    local x_gates = {}
-    x_gates = {nn.SplitTable(1, 2)(cnn_feature):split(T)}
+    local x_gates = {nn.SplitTable(1, 2)(cnn_feature):split(T)}
 
     local c = {c0}
     local h = {h0}

@@ -13,11 +13,6 @@ function Net:__init(args)
     -- IMPORTANT! do weight sharing after model is in cuda
     for k, v in pairs(self.share_list) do
         local m1 = v[1].data.module
-        --[[
-        if #v > 2 then
-            print(string.format("[%s] %d modules are shared", k, #v))
-        end
-        --]]
         for j = 2,#v do
             local m2 = v[j].data.module
             m2:share(m1,'weight','bias','gradWeight','gradBias')
@@ -40,8 +35,7 @@ end
 
 function Net:forward(x)
     if self.recurrent then
-        local input = {}
-        table.insert(input, x)
+        local input = {x}
         self:reset_init_states(x:size(1))
         for i = 1, #self.init_states do
             table.insert(input, self.init_states[i])
@@ -54,11 +48,10 @@ end
 
 function Net:backward(x, gradOutput)
     if self.recurrent then
-        local input = {}
+        local input = {x}
         for i = 1, #self.init_states do
             table.insert(input, self.init_states[i])
         end
-        table.insert(input, x)
         return self.net:backward(input, gradOutput)
     else
         return self.net:backward(x, gradOutput)
@@ -76,7 +69,7 @@ function Net:clone()
 end
 
 function Net:cuda()
-    self.net:cuda()
+    self.net = self.net:cuda()
     for i=1,#self.init_states do
         self.init_states[i] = self.init_states[i]:cuda()
     end
@@ -84,7 +77,7 @@ function Net:cuda()
 end
 
 function Net:float()
-    self.net:float()
+    self.net = self.net:float()
     for i=1,#self.init_states do
         self.init_states[i] = self.init_states[i]:float()
     end

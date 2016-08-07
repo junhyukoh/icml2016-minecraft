@@ -25,9 +25,6 @@ function DQN:build_model(args)
     nel = feature_map:nElement()
     net:add(nn.Reshape(nel))
     net:add(nn.Linear(nel, args.n_hid_enc))
-    if args.batch_norm then
-        net:add(nn.BatchNormalization(args.n_hid_enc))
-    end
     net:add(args.nl())
     net:add(nn.Linear(args.n_hid_enc, args.n_actions))
     return net
