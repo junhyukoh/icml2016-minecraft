@@ -122,9 +122,6 @@ function setup(_opt)
         _opt.agent_params.network = _opt.network
     end
     _opt.agent_params.verbose = _opt.verbose
-    if not _opt.agent_params.state_dim then
-        _opt.agent_params.state_dim = gameEnv:nObsFeature()
-    end
 
     local agent = dqn[_opt.agent](_opt.agent_params)
 
