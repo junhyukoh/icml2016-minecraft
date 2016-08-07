@@ -10,7 +10,7 @@ end
 require 'model.init'
 local nql = torch.class('dqn.NeuralQLearner')
 function nql:__init(args)
-    self.state_dim  = args.state_dim -- State dimensionality.
+    self.state_dim  = args.state_dim or 3*32*32 -- State dimensionality.
     self.actions    = args.actions
     self.n_actions  = #self.actions
     self.verbose    = args.verbose
