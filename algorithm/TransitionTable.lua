@@ -51,7 +51,6 @@ function trans:__init(args)
         end
     end
 
-    print(self.maxSize, self.stateDim)
     self.s = torch.ByteTensor(self.maxSize, self.stateDim):fill(0)
     self.a = torch.LongTensor(self.maxSize):fill(0)
     self.r = torch.zeros(self.maxSize)
