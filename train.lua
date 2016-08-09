@@ -19,7 +19,6 @@ cmd:option('-framework', 'environment.mcwrap', 'name of training framework')
 cmd:option('-env', '', 'name of environment to use')
 cmd:option('-test_env', '', 'name of test environment to use')
 cmd:option('-test_hist_len', 30, 'history length for testing')
-cmd:option('-test_steps', 1e4, 'number of evaluation steps for test environment')
 cmd:option('-env_params', '', 'string of environment parameters')
 cmd:option('-actrep', 1, 'how many times to repeat action')
 cmd:option('-save_name', '', 'filename used for saving network and training history')
@@ -138,7 +137,7 @@ while step < opt.steps do
         if ev_flag then
             epoch = epoch + 1
             epoch_time = sys.clock() - epoch_time
-            print("Epoch:", epoch, "V:", agent.v_avg, "Steps/Sec:",  math.floor(opt.eval_freq / epoch_time))
+            print("Epoch:", epoch, "Steps/Sec:",  math.floor(opt.eval_freq / epoch_time))
             if opt.verbose > 2 then
                 agent:report()
             end
@@ -154,7 +153,7 @@ while step < opt.steps do
                 td_history[ind] = agent.tderr_avg
                 qmax_history[ind] = agent.q_max
             end
-            print("Epoch:", epoch, "Reward:", total_reward, "num. ep.:", nepisodes)
+            print("Reward:", total_reward, "num. ep.:", nepisodes)
             reward_history[ind] = total_reward
             episode_counts[ind] = nepisodes
             screen, reward, terminal = game_env:newGame()
@@ -166,14 +165,14 @@ while step < opt.steps do
                     local ind = #test_reward_history[test_id]+1
                     print("Evaluating the agent on the test environment: " 
                             .. color.green(test_env_names[test_id]))
-                    nepisodes, total_reward = eval_agent(test_env[test_id], test_agent, opt.test_steps)
+                    nepisodes, total_reward = eval_agent(test_env[test_id], test_agent, opt.eval_steps)
                     total_reward = total_reward/math.max(1, nepisodes)
                     if #test_reward_history[test_id] == 0 or 
                             total_reward > torch.Tensor(test_reward_history[test_id]):max() then
                         agent.best_test_network[test_id] = test_agent.network:clone():float()
                     end
                     test_reward_history[test_id][ind] = total_reward
-                    print("Epoch:", epoch, "Reward:", total_reward, "num. ep.:", nepisodes)
+                    print("Reward:", total_reward, "num. ep.:", nepisodes)
                 end
 
                 -- Maintain and save only top K best models

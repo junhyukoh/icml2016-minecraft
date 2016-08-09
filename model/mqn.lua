@@ -12,17 +12,16 @@ function MQN:build_model(args)
         table.insert(init_states, state)
     end
     local T = args.hist_len
-    local conv_dim = 4096
     local edim = args.n_hid_enc
     local cnn_features = self:build_cnn(args, x)
     local history = nn.Narrow(2, 1, T-1)(cnn_features)
     local history_flat = nn.View(-1):setNumInputDims(1)(history)
-    local key_blocks = nn.Linear(conv_dim, edim)(history_flat)
-    local val_blocks = nn.Linear(conv_dim, edim)(history_flat)
+    local key_blocks = nn.Linear(args.conv_dim, edim)(history_flat)
+    local val_blocks = nn.Linear(args.conv_dim, edim)(history_flat)
     key_blocks = nn.View(-1, T-1, edim):setNumInputDims(2)(key_blocks)
     val_blocks = nn.View(-1, T-1, edim):setNumInputDims(2)(val_blocks)
     local hid, o = self:build_retrieval(args, key_blocks, val_blocks, 
-                cnn_features, conv_dim, unpack(init_states)) 
+                cnn_features, args.conv_dim, unpack(init_states)) 
     local hid2dim = nn.View(-1):setNumInputDims(1)(hid)
     local C = args.Linear(edim, edim)(hid2dim)
     local D = nn.CAddTable()({C, o})
@@ -46,7 +45,7 @@ function MQN:build_retrieval(args, key_blocks, val_blocks, cnn_features, conv_di
     local T = args.hist_len
     local edim = args.edim
     local memsize = math.min(T-1, args.memsize)
-    local context = self:build_context(args, cnn_features, conv_dim, edim, c0, h0)
+    local context = self:build_context(args, cnn_features, args.conv_dim, edim, c0, h0)
     local hid = nn.View(1, -1):setNumInputDims(1)(context)
     local key_blocks_t = nn.Narrow(2, T - memsize, memsize)(key_blocks)
     local val_blocks_t = nn.Narrow(2, T - memsize, memsize)(val_blocks)
@@ -85,7 +84,6 @@ function MQN:build_cnn(args, input)
         prev_input = conv_nl[i]
     end
 
-    local conv_dim = 4096
     local conv_flat = nn.View(-1):setNumInputDims(3)(conv_nl[#args.n_units])
-    return nn.View(-1, args.hist_len, conv_dim):setNumInputDims(2)(conv_flat)
+    return nn.View(-1, args.hist_len, args.conv_dim):setNumInputDims(2)(conv_flat)
 end

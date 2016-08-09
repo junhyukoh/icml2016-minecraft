@@ -12,7 +12,7 @@ function DRQN:build_model(args)
     local c0 = nn.Identity()()
     local h0 = nn.Identity()()
     local input = nn.Identity()()
-    local h, c = self:build_lstm(args, input, c0, h0, testing)
+    local h, c = self:build_lstm(args, input, c0, h0)
     local q = nn.Linear(args.lstm_dim, args.n_actions)(h)
     return nn.gModule({input, c0, h0}, {q})
 end
@@ -67,9 +67,8 @@ function DRQN:build_cnn_with_gate(args, input, T)
         prev_input = conv_nl[i]
     end
 
-    local nel = 4096
     local conv_flat = nn.View(-1):setNumInputDims(3)(conv_nl[#args.n_units])
-    local fc = nn.Linear(nel, args.n_hid_enc)(conv_flat)
+    local fc = nn.Linear(args.conv_dim, args.n_hid_enc)(conv_flat)
     local fc_nl = nn.ReLU()(fc)
     local lstm_input = nn.Linear(args.n_hid_enc, 4*args.lstm_dim)(fc_nl)
     return nn.View(-1, T, 4*args.lstm_dim):setNumInputDims(2)(lstm_input)

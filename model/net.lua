@@ -9,7 +9,6 @@ function Net:__init(args)
 
     if args.gpu > 0 then
         self:cuda()
-        cudnn.convert(self.net, cudnn)
     end
     -- IMPORTANT! do weight sharing after model is in cuda
     for k, v in pairs(self.share_list) do
@@ -71,6 +70,7 @@ end
 
 function Net:cuda()
     self.net = self.net:cuda()
+    cudnn.convert(self.net, cudnn)
     for i=1,#self.init_states do
         self.init_states[i] = self.init_states[i]:cuda()
     end

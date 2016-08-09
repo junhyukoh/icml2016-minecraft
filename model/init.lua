@@ -25,6 +25,7 @@ function g_create_network(args)
     new_args.lindim             = args.lindim or new_args.edim / 2
     new_args.lstm_dim           = args.edim or 256
     new_args.gpu                = args.gpu or -1
+    new_args.conv_dim           = new_args[#new_args] * 8 * 8
     new_args.Linear             = nn.LinearNB
     
     if args.name == "dqn" then
