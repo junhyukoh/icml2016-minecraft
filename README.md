@@ -51,3 +51,6 @@ test [task] [network_file] [gpu] ...
     * `-display`: display the first-person-view of the agent.
     * `-top_down_view`: display with top-down-view (fbpython is needed).
     * `-video [folder]`: save game play images into [folder].
+
+# Notes
+* The Minecraft instance does not display anything, because we turned off Minecraft display for efficient computation. You can see the game play only through the test script.
