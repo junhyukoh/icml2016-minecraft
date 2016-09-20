@@ -51,6 +51,3 @@ test [task] [network_file] [gpu] ...
     * `-display`: display the first-person-view of the agent.
     * `-top_down_view`: display with top-down-view (fbpython is needed).
     * `-video [folder]`: save game play images into [folder].
-
-## Virtual Display Installation (optional)
-* to be updated
