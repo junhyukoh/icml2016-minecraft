@@ -13,14 +13,13 @@ This repository implements the Minecraft domain and the method presented in the 
 ```
 
 # Installation
-* JRE or JDK: http://www.oracle.com/technetwork/java/javase/downloads/index.html
-* Torch7: http://torch.ch/docs/getting-started.html
-* Additional torch packages
+ * JRE or JDK: http://www.oracle.com/technetwork/java/javase/downloads/index.html
+ * Torch7: http://torch.ch/docs/getting-started.html
+ * Additional torch packages
   * luasocket (`luarocks install luasocket`)
   * fbpython (optional): https://github.com/facebook/fblualib
-    * This is used for top-down view image generation
+ * Tasks and maps need to be decompressed as follows.
 
-* Tasks and maps need to be decompressed as follows.
 ```
 cd environment/Forge/eclipse/
 tar -zxvf tasks.tar.gz
