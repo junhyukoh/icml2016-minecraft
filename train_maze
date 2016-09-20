@@ -1,0 +1,84 @@
+#!/bin/bash
+
+if [ -z "$3" ]
+  then echo "Usage: [task] [model_name] [gpu]"; exit 0
+fi
+env="$1"
+test_env="${env}Test,${env}Large"
+name=$2
+gpu=$3
+hist_len=10
+test_hist_len=30
+
+if [ $name = "dqn" ]
+  then test_hist_len=10
+fi
+
+if [ $env = "Single" ] 
+then
+  if [ $name = "dqn" ]
+    then lr=0.0001
+  elif [ $name = "drqn" ]
+    then lr=0.00025
+  elif [ $name = "mqn" ]
+    then lr=0.0001
+  elif [ $name = "rmqn" ]
+    then lr=0.00025
+  elif [ $name = "frmqn" ]
+    then lr=0.00025
+  fi
+elif [ $env = "Seq" ] 
+then
+  if [ $name = "dqn" ]
+    then lr=0.00025
+  elif [ $name = "drqn" ]
+    then lr=0.0005
+  elif [ $name = "mqn" ]
+    then lr=0.00025
+  elif [ $name = "rmqn" ]
+    then lr=0.00025
+  elif [ $name = "frmqn" ]
+    then lr=0.00025
+  fi
+elif [ $env = "SingleIndicator" ] 
+then
+  if [ $name = "dqn" ]
+    then lr=0.0001
+  elif [ $name = "drqn" ]
+    then lr=0.0005
+  elif [ $name = "mqn" ]
+    then lr=0.00025
+  elif [ $name = "rmqn" ]
+    then lr=0.0005
+  elif [ $name = "frmqn" ]
+    then lr=0.00025
+  fi
+elif [ $env = "SeqIndicator" ] 
+then
+  if [ $name = "dqn" ]
+    then lr=0.00025
+  elif [ $name = "drqn" ]
+    then lr=0.001
+  elif [ $name = "mqn" ]
+    then lr=0.00025
+  elif [ $name = "rmqn" ]
+    then lr=0.00025
+  elif [ $name = "frmqn" ]
+    then lr=0.0005
+  fi
+else
+  echo "Invalid tasks. (Single | Seq | SingleIndicator | SeqIndicator)"; exit 0
+fi
+
+network="$name"
+seed=1
+steps=25000000
+replay_memory=1000000
+state_dim=3072
+batch_size=32
+save_name=${env}_${name}
+agent_params="lr=$lr,hist_len=$hist_len,replay_memory=$replay_memory,network="\"$network\"",state_dim=$state_dim,minibatch_size=$batch_size"
+args="-save_name $save_name -env $env -agent_params $agent_params -steps $steps -gpu $gpu -seed $seed -test_env $test_env -test_hist_len $test_hist_len"
+echo $args
+
+th train.lua $args

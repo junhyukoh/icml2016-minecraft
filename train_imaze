@@ -1,19 +1,27 @@
 #!/bin/bash
 
-if [ -z "$7" ]
-  then echo "Usage: [train_task] [test_task] [model_name] [hist_len] [test_hist_len] [lr] [gpu]"; exit 0
+if [ -z "$2" ]
+  then echo "Usage: [model_name] [gpu]"; exit 0
 fi
-env=$1
-test_env=$2
-name=$3
-hist_len=$4
-test_hist_len=$5
-lr=$6
-gpu=$7
+env="IMaze"
+test_env="IMazeTest"
+name=$1
+gpu=$2
+hist_len=12
+
+if [ $name = "dqn" ]
+then
+  lr=0.00025
+  test_hist_len=12
+else
+  lr=0.0005
+  test_hist_len=50
+fi
+
 network="$name"
 seed=1
-steps=25000000
-replay_memory=1000000
+steps=15000000
+replay_memory=50000
 state_dim=3072
 batch_size=32
 save_name=${env}_${name}
