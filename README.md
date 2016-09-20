@@ -20,6 +20,12 @@ This repository implements the Minecraft domain and the method presented in the 
   * fbpython (optional): https://github.com/facebook/fblualib
     * This is used for top-down view image generation
 
+* Tasks and maps need to be decompressed as follows.
+```
+cd environment/Forge/eclipse/
+tar -zxvf tasks.tar.gz
+```
+
 # Minecraft
 The following command creates a minecraft instance.
 ```
@@ -46,38 +52,6 @@ test [task] [network_file] [gpu] ...
     * `-display`: display the first-person-view of the agent.
     * `-top_down_view`: display with top-down-view (fbpython is needed).
     * `-video [folder]`: save game play images into [folder].
-
-# More Details of Minecraft Environment
-## File/Directory Structure
-```
-Forge/eclipse/[task]
-Forge/eclipse/[task]/actions.xml
-Forge/eclipse/[task]/blockTypeInfo.xml
-Forge/eclipse/[task]/goalInfo.xml
-Forge/eclipse/[task]/task.xml
-Forge/eclipse/[task]/maps/%04d
-Forge/eclipse/[task]/maps/%04d/topology.csv
-Forge/eclipse/[task]/maps/%04d/goal_%04d.csv
-Forge/eclipse/[task]/maps/%04d/spawn_%04d.csv
-```
-
-## Task List
-* IMaze
-* IMazeTest
-* PatternMatching
-* PatternMatchingTest
-* Single
-* SingleTest
-* SingleLarge
-* Seq
-* SeqTest
-* SeqLarge
-* SingleIndicator
-* SingleIndicatorTest
-* SingleIndicatorLarge
-* SeqIndicator
-* SeqIndicatorTest
-* SeqIndicatorLarge
 
 ## Virtual Display Installation (optional)
 * to be updated
