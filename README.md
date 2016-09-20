@@ -43,14 +43,58 @@ The following scripts are provided for reproducing the main result of the paper:
 [task]: [Single | Seq | SingleIndicator | SeqIndicator]
 ```
 
+The full description of `train.lua` is:
+```
+Options:
+  -framework         name of training framework [environment.mcwrap]
+  -env               task name for training []
+  -test_env          task names for testing (comma-separated) []
+  -test_hist_len     history length for testing [30]
+  -env_params        string of environment parameters []
+  -actrep            how many times to repeat action [1]
+  -save_name         filename used for saving network and training history []
+  -network           name of architecture or the filename of pretrained model []
+  -agent             name of agent file to use [NeuralQLearner]
+  -agent_params      string of agent parameters []
+  -seed              random seed [1]
+  -saveNetworkParams saves the parameter in a separate file [true]
+  -save_freq         the model is saved every save_freq steps [100000]
+  -eval_freq         frequency of greedy evaluation [100000]
+  -eval_steps        number of evaluation steps [10000]
+  -steps             number of training steps [15000000]
+  -verbose           the level of debug prints [2]
+  -threads           number of BLAS threads [4]
+  -gpu               gpu id [-1]
+  -port              port number for minecraft: search over [3000,30100] if 0 [0]
+```
+
 # Testing
 ```
-test [task] [network_file] [gpu] ...
+./test [task] [network_file] [gpu] ...
 ```
   * Options
     * `-display`: display the first-person-view of the agent.
     * `-top_down_view`: display with top-down-view (fbpython is needed).
     * `-video [folder]`: save game play images into [folder].
 
+The full description of `test.lua` is:
+```
+Options:
+  -framework    name of training framework [environment.mcwrap]
+  -env          task name for testing []
+  -network      pretrained network file []
+  -param        initilaize to the pretrained parameter if specified []
+  -agent        name of agent file to use [NeuralQLearner]
+  -agent_params string of agent parameters []
+  -threads      number of BLAS threads [1]
+  -best         use best model [1]
+  -port         port number for minecraft: search over [3000,30100] if 0 [0]
+  -num_play     number of plays [30]
+  -img_size     screen size [300]
+  -display      display screen [false]
+  -top_down     display top-down view [false]
+  -gpu          gpu id [-1]
+  -video        save video/images to the specified folder []
+```
 # Notes
 * The Minecraft instance does not display anything, because we turned off Minecraft display for efficient computation. You can see the game play only through the test script.
