@@ -30,7 +30,7 @@ The following command creates a minecraft instance.
 ```
 ./run_minecraft
 ```
-You should run a minecraft instance for each task. For example, the training script on random mazes (`train_maze`) requires 3 mincraft instances for training maps, unseen maps, and larger maps.
+You should run a minecraft instance for each task. For example, the training script on random mazes (`train_maze`) requires 3 mincraft instances for training maps, unseen maps, and larger maps. If you are interested in building your own tasks, please refer to [this link](https://github.com/junhyukoh/icml2016-minecraft/tree/master/environment) for more details of the environment and the data structure.
 
 # Training
 The following scripts are provided for reproducing the main result of the paper:
