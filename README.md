@@ -15,9 +15,9 @@ This repository implements the Minecraft domain and the method presented in the 
 # Installation
  * JRE or JDK: http://www.oracle.com/technetwork/java/javase/downloads/index.html
  * Torch7: http://torch.ch/docs/getting-started.html
- * Additional torch packages
+ * Additional lua packages
   * luasocket (`luarocks install luasocket`)
-  * fbpython (optional): https://github.com/facebook/fblualib
+  * fbpython (optional for top-down-view image): https://github.com/facebook/fblualib
  * Tasks and maps need to be decompressed as follows.
 
 ```
