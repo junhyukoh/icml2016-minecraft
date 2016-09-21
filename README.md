@@ -65,7 +65,7 @@ Options:
   -verbose           the level of debug prints [2]
   -threads           number of BLAS threads [4]
   -gpu               gpu id [-1]
-  -port              port number for minecraft: search over [3000,30100] if 0 [0]
+  -port              port number for minecraft: search over [30000,30100] if 0 [0]
 ```
 
 # Testing
@@ -88,7 +88,7 @@ Options:
   -agent_params string of agent parameters []
   -threads      number of BLAS threads [1]
   -best         use best model [1]
-  -port         port number for minecraft: search over [3000,30100] if 0 [0]
+  -port         port number for minecraft: search over [30000,30100] if 0 [0]
   -num_play     number of plays [30]
   -img_size     screen size [300]
   -display      display screen [false]
