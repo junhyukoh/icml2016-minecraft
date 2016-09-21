@@ -1,15 +1,15 @@
 # Minecraft Environment
 ## File/Directory Structure
 ```
-Forge/eclipse/[task]
-Forge/eclipse/[task]/actions.xml
-Forge/eclipse/[task]/blockTypeInfo.xml
-Forge/eclipse/[task]/goalInfo.xml
-Forge/eclipse/[task]/task.xml
-Forge/eclipse/[task]/maps/%04d
-Forge/eclipse/[task]/maps/%04d/topology.csv
-Forge/eclipse/[task]/maps/%04d/goal_%04d.csv
-Forge/eclipse/[task]/maps/%04d/spawn_%04d.csv
+Forge/eclipse/tasks/[task_name]
+Forge/eclipse/tasks/[task_name]/actions.xml
+Forge/eclipse/tasks/[task_name]/blockTypeInfo.xml
+Forge/eclipse/tasks/[task_name]/goalInfo.xml
+Forge/eclipse/tasks/[task_name]/task.xml
+Forge/eclipse/tasks/[task_name]/maps/%04d
+Forge/eclipse/tasks/[task_name]/maps/%04d/topology.csv
+Forge/eclipse/tasks/[task_name]/maps/%04d/goal_%04d.csv
+Forge/eclipse/tasks/[task_name]/maps/%04d/spawn_%04d.csv
 ```
 
 ## Task List
@@ -29,3 +29,9 @@ Forge/eclipse/[task]/maps/%04d/spawn_%04d.csv
 * SeqIndicator
 * SeqIndicatorTest
 * SeqIndicatorLarge
+
+## Data structure (to be updated)
+* actions.xml
+* blockTypeInfo.xml
+* goalInfo.xml
+* task.xml
