@@ -53,35 +53,6 @@ function gameEnv:reset(_env, _params, _gpu, _port, _img_size)
             end
             os.execute("sleep 1")
         end
-        --[[
-        local proc = require "process"
-        local lfs = require "lfs"
-
-        local cur_dir = lfs.currentdir()
-        lfs.chdir("..")
-
-        self.mc_proc = proc.exec("./run_mc")
-        print("Executing Minecraft")
-        while true do
-            local stdout = self.mc_proc:stdout()
-            if stdout then
-                if self.verbose > 2 then
-                    io.write(stdout)
-                    io.flush()
-                end
-                local idx, idx_end
-                idx, idx_end = stdout:find("on port ")
-                if idx then
-                    params.port = tonumber(stdout:sub(idx_end, idx_end+5))
-                    break
-                end
-            end
-        end
-        lfs.chdir(cur_dir)
-        if self.verbose > 2 then
-            print("Port: ", params.port)
-        end
-        --]]
     end
     assert(self.client, "Socket connection failed")
     print("Connected to Port:", port)
